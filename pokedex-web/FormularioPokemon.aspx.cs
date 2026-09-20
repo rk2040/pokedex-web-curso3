@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -36,8 +37,27 @@ namespace pokedex_web
                 }
 
                 //Configuración si estamos Modificando
-                if (Request.QueryString["id"] != null) //Para saber si encontro un id en la url que trajo, sino es uno nuevo, no una mofidicación
+                string id = Request.QueryString["id"] != null ? Request.QueryString["id"] : ""; //Para saber si encontro un id en la url que trajo. Si trajo guardamos el id, sino guardamos "" vacio.
+                if (id != "" && !IsPostBack) //Si trajo un id, osea es distinto a vacio, cargamos los datos para modificar
                 {
+                    PokemonNegocio negocio = new PokemonNegocio();
+                    //List<Pokemon> lista = negocio.listar(id);
+                    //Pokemon seleccionado = lista[0];
+
+                    Pokemon seleccionado = (negocio.listar(id))[0]; // es lo mismo que las 2 lineas anteriores, pero en una sola linea. No creo la variable lista y me ahorro esa linea
+
+                    //Pre cargar todos los datos al formulario...
+                    txtId.Text = id;
+                    txtNombre.Text = seleccionado.Nombre;
+                    txtDescripcion.Text = seleccionado.Descripcion;
+                    txtUrlImagen.Text = seleccionado.UrlImagen;
+                    txtNumero.Text = seleccionado.Numero.ToString();
+
+                    ddlTipo.SelectedValue = seleccionado.Tipo.Id.ToString();
+                    ddlDebilidad.SelectedValue = seleccionado.Debilidad.Id.ToString();
+
+                    // Esta forma de forzarlo es bastante fea, tendría que ver creando un metodo o algo.
+                    txtUrlImagen_TextChanged(sender, e); // Forzamos el llamado a la funcion para que cargue la imagen, ya que no se precargaba al cargar los datos del seleccionado en el formulario
 
                 }
 
@@ -69,7 +89,14 @@ namespace pokedex_web
                 nuevo.Debilidad = new Elemento();
                 nuevo.Debilidad.Id = int.Parse(ddlDebilidad.SelectedValue);
 
-                negocio.agregarConSP(nuevo);
+                if (Request.QueryString["id"] != null)
+                {
+                    nuevo.Id = int.Parse(txtId.Text); // o podría ser: = int.Parse(Request.QueryString["id"]);
+                    negocio.modificarConSP(nuevo);
+                } 
+                else
+                    negocio.agregarConSP(nuevo);
+
                 Response.Redirect("PokemonLista.aspx", false);
             }
             catch (Exception ex)

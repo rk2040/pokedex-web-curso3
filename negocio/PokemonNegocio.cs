@@ -11,7 +11,7 @@ namespace negocio
 {
     public class PokemonNegocio
     {
-        public List<Pokemon> listar()
+        public List<Pokemon> listar(string id = "") //Agregar el parametro con (= "") hace que sea opcional, entonces cualquier otra llamada al metodo de antes, no se va a romper ni nada por hacerte este agregado "opcional" 
         {
             List<Pokemon> lista = new List<Pokemon>();
             SqlConnection conexion = new SqlConnection();
@@ -28,7 +28,11 @@ namespace negocio
                                                                                                                    //  integrate securiry=true  Tipo de auntenticacion de segurtidad, en este ejemplo usamos los de Windos de la BBDD
 
                 comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "Select Numero ,Nombre, P.Descripcion, UrlImagen, E.Descripcion as Tipo, D.Descripcion as Debilidad, P.IdTipo, P.IdDebilidad, P.Id from POKEMONS P, ELEMENTOS E, ELEMENTOS D Where P.IdTipo = E.Id AND P.IdDebilidad = D.Id AND P.Activo = 1\r\n";
+                comando.CommandText = "Select Numero ,Nombre, P.Descripcion, UrlImagen, E.Descripcion as Tipo, D.Descripcion as Debilidad, P.IdTipo, P.IdDebilidad, P.Id from POKEMONS P, ELEMENTOS E, ELEMENTOS D Where P.IdTipo = E.Id AND P.IdDebilidad = D.Id AND P.Activo = 1 \r\n";
+                if(id != "")
+                {
+                    comando.CommandText += "and P.Id = " + id;
+                }
                 comando.Connection = conexion;
 
                 conexion.Open();
@@ -198,6 +202,34 @@ namespace negocio
             }
         }
 
+        public void modificarConSP(Pokemon poke)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("storedModificarPokemon");
+
+                datos.setearParametros("@numero", poke.Numero);
+                datos.setearParametros("@nombre", poke.Nombre);
+                datos.setearParametros("@descripcion", poke.Descripcion);
+                datos.setearParametros("@urlImagen", poke.UrlImagen);
+                datos.setearParametros("@idTipo", poke.Tipo.Id);
+                datos.setearParametros("@idDebilidad", poke.Debilidad.Id);
+                datos.setearParametros("@id", poke.Id);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
         public void eliminar(int id)
         {
             try
@@ -324,5 +356,6 @@ namespace negocio
                 throw ex;
             }
         }
+
     }
 }
