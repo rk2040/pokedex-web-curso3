@@ -53,6 +53,27 @@
                     <asp:Image ID="imgPokemon" Width="60%" ImageUrl="https://media.istockphoto.com/id/1128826884/es/vector/ning%C3%BAn-s%C3%ADmbolo-de-vector-de-imagen-falta-icono-disponible-no-hay-galer%C3%ADa-para-este-momento.jpg?s=612x612&w=0&k=20&c=9vnjI4XI3XQC0VHfuDePO7vNJE7WDM8uzQmZJ1SnQgk=" runat="server" />
                 </ContentTemplate>
             </asp:UpdatePanel>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+
+            <asp:UpdatePanel runat="server">
+                <ContentTemplate>
+                    <div class="mb-3">
+                        <asp:Button Text="Eliminar" ID="btnEliminar" CssClass="btn btn-danger" OnClick="btnEliminar_Click" runat="server" />
+                    </div>
+                    <%if (ConfirmaEliminacion)
+                        { %>
+                        <div class="mb-3">
+                            <asp:CheckBox Text="Confirmar Eliminacion" ID="chkConfirmaEliminacion" runat="server" />
+                            <asp:Button Text="Eliminar" ID="btnConfirmaEliminar" CssClass="btn btn-outline-danger" OnClick="btnConfirmaEliminar_Click" runat="server" />
+                        </div>
+                    <% } %>
+                </ContentTemplate>
+            </asp:UpdatePanel>
 
         </div>
     </div>
