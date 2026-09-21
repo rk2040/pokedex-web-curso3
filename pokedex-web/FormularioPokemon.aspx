@@ -35,6 +35,7 @@
             <div class="mb-3">
                 <asp:Button Text="Aceptar" ID="btnAceptar" CssClass="btn btn-primary" OnClick="btnAceptar_Click" runat="server" />
                 <asp:HyperLink NavigateUrl="PokemonLista.aspx" Text="Cancelar" CssClass="btn btn-secondary" runat="server" />
+                <asp:Button Text="Inactivar" ID="btnInactivar" CssClass="btn btn-warning" OnClick="btnInactivar_Click" runat="server" />
             </div>
         </div>
 

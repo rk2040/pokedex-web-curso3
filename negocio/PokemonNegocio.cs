@@ -28,7 +28,7 @@ namespace negocio
                                                                                                                    //  integrate securiry=true  Tipo de auntenticacion de segurtidad, en este ejemplo usamos los de Windos de la BBDD
 
                 comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "Select Numero ,Nombre, P.Descripcion, UrlImagen, E.Descripcion as Tipo, D.Descripcion as Debilidad, P.IdTipo, P.IdDebilidad, P.Id from POKEMONS P, ELEMENTOS E, ELEMENTOS D Where P.IdTipo = E.Id AND P.IdDebilidad = D.Id AND P.Activo = 1 \r\n";
+                comando.CommandText = "Select Numero ,Nombre, P.Descripcion, UrlImagen, E.Descripcion as Tipo, D.Descripcion as Debilidad, P.IdTipo, P.IdDebilidad, P.Id, P.Activo from POKEMONS P, ELEMENTOS E, ELEMENTOS D Where P.IdTipo = E.Id AND P.IdDebilidad = D.Id \r\n";
                 if(id != "")
                 {
                     comando.CommandText += "and P.Id = " + id;
@@ -59,6 +59,8 @@ namespace negocio
                     aux.Debilidad = new Elemento();
                     aux.Debilidad.Id = (int)lector["IdDebilidad"];
                     aux.Debilidad.Descripcion = (string)lector["Debilidad"];
+
+                    aux.Activo = bool.Parse(lector["Activo"].ToString());
 
                     lista.Add(aux);
                 }
@@ -109,6 +111,8 @@ namespace negocio
                     aux.Debilidad = new Elemento();
                     aux.Debilidad.Id = (int)datos.Lector["IdDebilidad"];
                     aux.Debilidad.Descripcion = (string)datos.Lector["Debilidad"];
+
+                    aux.Activo = bool.Parse(datos.Lector["Activo"].ToString());
 
                     lista.Add(aux);
                 }
@@ -247,13 +251,14 @@ namespace negocio
             }
         }
 
-        public void eliminarLogico(int id)
+        public void eliminarLogico(int id, bool activo = false)
         {
             try
             {
                 AccesoDatos datos = new AccesoDatos();
-                datos.setearConsulta("update pokemons set Activo = 0 where id = @id");
+                datos.setearConsulta("update pokemons set Activo = @activo where id = @id");
                 datos.setearParametros("@id", id);
+                datos.setearParametros("@activo", activo);
                 datos.ejecutarAccion();
 
             }

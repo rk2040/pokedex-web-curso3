@@ -48,6 +48,9 @@ namespace pokedex_web
 
                     Pokemon seleccionado = (negocio.listar(id))[0]; // es lo mismo que las 2 lineas anteriores, pero en una sola linea. No creo la variable lista y me ahorro esa linea
 
+                    // Guardo pokemon seleccionado en Session
+                    Session.Add("pokeSeleccionado", seleccionado);
+
                     //Pre cargar todos los datos al formulario...
                     txtId.Text = id;
                     txtNombre.Text = seleccionado.Nombre;
@@ -61,6 +64,10 @@ namespace pokedex_web
                     // Esta forma de forzarlo es bastante fea, tendría que ver creando un metodo o algo.
                     txtUrlImagen_TextChanged(sender, e); // Forzamos el llamado a la funcion para que cargue la imagen, ya que no se precargaba al cargar los datos del seleccionado en el formulario
 
+
+                    // Configurar acciones
+                    if (!seleccionado.Activo)
+                        btnInactivar.Text = "Reactivar";
                 }
 
             }
@@ -129,6 +136,23 @@ namespace pokedex_web
                     Response.Redirect("PokemonLista.aspx");
                 }
 
+            }
+            catch (Exception ex)
+            {
+
+                Session.Add("Error ", ex);
+            }
+        }
+
+        protected void btnInactivar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                PokemonNegocio negocio = new PokemonNegocio();
+                Pokemon seleccionado = (Pokemon)Session["pokeSeleccionado"];
+
+                negocio.eliminarLogico(seleccionado.Id, !seleccionado.Activo);
+                Response.Redirect("PokemonLista.aspx");
             }
             catch (Exception ex)
             {
