@@ -47,10 +47,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Curso C# Nivel 3\primera-web2\Ejemplos aspnet update y ddlist\aspnet-webforms-ejemplos\acceso-datos\acceso-datos.csproj">
-      <Project>{6b632261-3de0-4b25-93af-411fca6bf691}</Project>
-      <Name>acceso-datos</Name>
-    </ProjectReference>
     <ProjectReference Include="..\dominio\dominio.csproj">
       <Project>{90e1b09c-af1a-469c-955e-4cc862397313}</Project>
       <Name>dominio</Name>
