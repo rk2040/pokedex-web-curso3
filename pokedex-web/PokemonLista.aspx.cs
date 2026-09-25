@@ -14,6 +14,12 @@ namespace pokedex_web
         public bool FiltroAvanzado { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Seguridad.esAdmin(Session["trainee"]))
+            {
+                Session.Add("Error", "Necesita permisos de Admin para acceder a esta Page");
+                Response.Redirect("Error.aspx");
+            }
+
             FiltroAvanzado = chkAvanzado.Checked;
             if (!IsPostBack)
             {
@@ -75,7 +81,7 @@ namespace pokedex_web
             try
             {
                 PokemonNegocio negocio = new PokemonNegocio();
-                dgvPokemons.DataSource = negocio.filtrar(ddlCampo.SelectedItem.ToString(), ddlCriterio.SelectedItem.ToString(),txtFiltroAvanzado.Text, ddlEstado.SelectedItem.ToString());
+                dgvPokemons.DataSource = negocio.filtrar(ddlCampo.SelectedItem.ToString(), ddlCriterio.SelectedItem.ToString(), txtFiltroAvanzado.Text, ddlEstado.SelectedItem.ToString());
                 dgvPokemons.DataBind();
             }
             catch (Exception ex)
