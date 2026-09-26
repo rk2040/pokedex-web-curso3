@@ -21,5 +21,13 @@ namespace pokedex_web
             }
 
         }
+
+        protected void btnSalir_Click(object sender, EventArgs e)
+        {
+            //Session.Remove("trainee");
+            //Reemplazo remove por Clear porque quiero eliminar todos los datos que haya cargado el usuario en su sesion
+            Session.Clear();
+            Response.Redirect("Default.aspx");
+        }
     }
 }
