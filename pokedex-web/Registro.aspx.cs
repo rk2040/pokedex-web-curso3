@@ -26,7 +26,9 @@ namespace pokedex_web
                 user.Email = txtEmail.Text;
                 user.Pass = txtPassword.Text;
 
-                int id = traineeNegocio.insertarNuevo(user);
+                user.Id = traineeNegocio.insertarNuevo(user);
+
+                Session.Add("trainee", user); //Con esto dejo abierta la sesión al usuario despues de que se registre, asi no tiene que registrarse y despues tenga que loguearse
 
                 //Una vez que se registra un nuevo usuario, podemos enviarle un email de bienvenida o algo asi
                 emailService.armarCorreo(user.Email, "Bienvenido Trainee", "Hola, te damos la bienvenida como nuevo trainee!!!");
