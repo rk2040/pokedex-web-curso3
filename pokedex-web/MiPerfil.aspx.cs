@@ -48,6 +48,7 @@ namespace pokedex_web
                 Page.Validate();
                 if (!Page.IsValid)
                     return;
+
                 TraineeNegocio negocio = new TraineeNegocio();
                 Trainee user = (Trainee)Session["trainee"];
                 //Para escribir la ruta img si se cargo algo
