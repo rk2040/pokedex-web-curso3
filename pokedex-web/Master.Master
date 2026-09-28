@@ -44,15 +44,16 @@
                         <%if (!negocio.Seguridad.sesionActiva(Session["trainee"]))
                             { %> 
                         <asp:HyperLink href="Login.aspx" CssClass="btn btn-success me-2" runat="server">Login</asp:HyperLink>
-                        <asp:HyperLink href="Registro.aspx" CssClass="btn btn-outline-primary me-auto" runat="server">Registrarse</asp:HyperLink>
+                        <asp:HyperLink href="Registro.aspx" CssClass="btn btn-outline-primary me-2" runat="server">Registrarse</asp:HyperLink>
 
                         <%  } %>
                         <%else
                             { %>
-                        <asp:Button Text="Salir" ID="btnSalir" CssClass="btn btn-outline-danger" OnClick="btnSalir_Click" runat="server" />
+                        <asp:Button Text="Salir" ID="btnSalir" CssClass="btn btn-outline-danger me-2" OnClick="btnSalir_Click" runat="server" />
+                        <asp:Label ID="lblUser" Text="user" CssClass="text-light m-auto me-2" runat="server" />
                         <%  } %>
 
-                        <asp:Image ID="imgAvatar" Style="height: 40px; width: 40px; border-radius: 50%;" runat="server" />
+                        <asp:Image ID="imgAvatar" Style="height: 40px; width: 40px; border-radius: 50%;" CssClass="mx-2"  runat="server" />
                     </div>
 
                 </div>

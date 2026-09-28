@@ -33,14 +33,14 @@ namespace pokedex_web
                 else
                 {
                     Session.Add("Error", "User o Pass incorrectos");
-                    Response.Redirect("Error.aspx");
+                    Response.Redirect("Error.aspx", false);
                 }
 
             }
             catch (Exception ex)
             {
 
-                Session.Add("Error", ex);
+                Session.Add("Error", ex.ToString());
                 Response.Redirect("Error.aspx");
             }
         }

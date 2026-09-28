@@ -36,7 +36,7 @@ namespace pokedex_web
                     ddlDebilidad.DataValueField = "Id";
                     ddlDebilidad.DataTextField = "Descripcion";
                     ddlDebilidad.DataBind();
-                }
+                } 
 
                 //Configuración si estamos Modificando
                 string id = Request.QueryString["id"] != null ? Request.QueryString["id"] : ""; //Para saber si encontro un id en la url que trajo. Si trajo guardamos el id, sino guardamos "" vacio.
@@ -73,9 +73,8 @@ namespace pokedex_web
             }
             catch (Exception ex)
             {
-                Session.Add("Error ", ex);
-                throw ;
-                //redireccion pantalla error
+                Session.Add("Error ", ex.ToString());
+                Response.Redirect("Error.aspx");
             }
 
         }
@@ -110,8 +109,8 @@ namespace pokedex_web
             }
             catch (Exception ex)
             {
-                Session.Add("Error ", ex);
-                throw;
+                Session.Add("Error ", ex.ToString());
+                Response.Redirect("Error.aspx");
             }
         }
 
@@ -140,7 +139,7 @@ namespace pokedex_web
             catch (Exception ex)
             {
 
-                Session.Add("Error ", ex);
+                Session.Add("Error ", ex.ToString());
             }
         }
 
@@ -157,7 +156,7 @@ namespace pokedex_web
             catch (Exception ex)
             {
 
-                Session.Add("Error ", ex);
+                Session.Add("Error ", ex.ToString());
             }
         }
     }
